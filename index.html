@@ -36,8 +36,8 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- <script defer src="./static/js/fontawesome.all.min.js"></script> -->
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
+  <!-- <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script> -->
   <script src="./static/js/index.js"></script>
   <script src="./static/js/map.js?v=<?php echo time(); ?>"></script>
   <!-- ?v=<?php echo time(); ? -->
@@ -186,7 +186,7 @@
   <section class="section">
     <div class="container is-max-desktop">
 
-      <div class="columns is-centered">
+      <div class="columns is-centered is-full-width">
 
         <!-- Visual Effects. -->
         <div class="column">
@@ -206,7 +206,7 @@
 
         <!-- Matting. -->
         <div class="column">
-          <div class="columns is-centered">
+          <div class="columns is-centered is-full-width">
             <div class="column content">
               <h2 class="title is-3">Learning Rewards from Counterfactuals</h2>
               <p>
@@ -214,16 +214,19 @@
                 learning framework that queries humans for counterfactual annotations to align rewards with human
                 preferences.
               </p>
-              <video id="matting-video" autoplay controls muted playsinline height="100%">
+              <video id="dollyzoom" autoplay controls muted playsinline height="50%">
                 <source src="./static/videos/rewardframework.mp4" type="video/mp4">
+                Your browser does not support the video tag.
               </video>
-            </div>
 
+            </div>
           </div>
         </div>
-      </div>
-      <!--/ Matting. -->
+        <!--/ Matting. -->
+  </section>
 
+  <section class="section">
+    <div class="container is-max-desktop">
       <!-- Animation. -->
       <div class="columns is-centered">
         <div class="column is-full-width">
@@ -233,7 +236,8 @@
               We deploy CREStE on a 2 kilometer unseen urban loop to evaluate it on the task of long-horizon mapless
               navigation. Trained with only 2.5 hours of real-world demonstrations, CREStE is able to complete the
               entire mission with just a single intervention, demonstrating its robustness and generalizability to
-              diverse urban environments. We include short clips from this deployment below, including the sole failure,
+              diverse urban environments. We include short clips from this deployment below, including the sole
+              failure,
               and link the full uncut video externally for viewing.
             </p>
             <!-- Container for the interactive map -->
@@ -256,6 +260,7 @@
           </div>
         </div>
 
+      </div>
   </section>
 
   <section class="section">
@@ -308,13 +313,13 @@
             </div>
             <!-- Video 3 -->
             <div class="column">
-              <h4 class="title is-4">Terrain-Aware + Geometric (PACER+G)
-              </h4>
-              <div class="video-wrapper">
-                <video src="./static/videos/paperexperimentsprocessed/hemphillpark_pacer.mp4" autoplay controls muted
-                  loop playsinline>
-                </video>
-              </div>
+              <h3 class="title is-5">Terrain + Geometric (PACER+G)
+                </h4>
+                <div class="video-wrapper">
+                  <video src="./static/videos/paperexperimentsprocessed/hemphillpark_pacer.mp4" autoplay controls muted
+                    loop playsinline>
+                  </video>
+                </div>
             </div>
             <!--/ Animation. -->
           </div>

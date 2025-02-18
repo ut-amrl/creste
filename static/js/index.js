@@ -18,14 +18,14 @@ $(document).ready(function () {
     autoplaySpeed: 3000,
   }
 
-  // Initialize all div with carousel class
-  var carousels = bulmaCarousel.attach('.carousel', options);
+  // // Initialize all div with carousel class
+  // var carousels = bulmaCarousel.attach('.carousel', options);
 
-  // Loop on each carousel initialized
-  for (var i = 0; i < carousels.length; i++) {
-    // Add listener to  event
-    carousels[i].on('before:show', state => {
-      console.log(state);
-    });
-  }
+  // // Loop on each carousel initialized
+  // for (var i = 0; i < carousels.length; i++) {
+  //   // Add listener to  event
+  //   carousels[i].on('before:show', state => {
+  //     console.log(state);
+  //   });
+  // }
 })

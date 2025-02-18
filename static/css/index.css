@@ -217,6 +217,36 @@ body {
 /* BEGIN VIDEO MOSAIC */
 /* Mosaic container styles */
 
+
+/* Video wrapper enforces a 16:9 aspect ratio */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  /* 16:9 aspect ratio (9/16 * 100) */
+  background: #000;
+  /* Optional: black background for letterboxing */
+  overflow: hidden;
+  border: 1px solid darkgrey;
+  border-radius: 8px;
+}
+
+video {
+  border: 1px solid darkgrey;
+  border-radius: 8px;
+}
+
+/* Style the video to fit inside the container while preserving its aspect ratio */
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Preserve aspect ratio and add letterboxing if necessary */
+}
+
 /* END VIDEO MOSAIC */
 
 
