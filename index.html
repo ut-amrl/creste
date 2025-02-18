@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
-  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+    content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="CREStE, creste, mapless navigation, internet scale priors, counterfactual guidance">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nerfies: Deformable Neural Radiance Fields</title>
+  <title>CREStE: Scalable Mapless Navigation with Internet Scale Priors and Counterfactual Guidance</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
@@ -22,469 +23,369 @@
     gtag('config', 'G-PYVRSFMDRL');
   </script>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <!-- <link rel="stylesheet" href="./static/css/fontawesome.all.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.svg">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <!-- <script defer src="./static/js/fontawesome.all.min.js"></script> -->
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+  <script src="./static/js/map.js?v=<?php echo time(); ?>"></script>
+  <!-- ?v=<?php echo time(); ? -->
+  <script src="./static/js/bibtex.js"></script>
 </head>
+
 <body>
-
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://hypernerf.github.io">
-            HyperNeRF
-          </a>
-          <a class="navbar-item" href="https://nerfies.github.io">
-            Nerfies
-          </a>
-          <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
-          </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</nav>
-
-
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Nerfies: Deformable Neural Radiance Fields</h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://keunhong.com">Keunhong Park</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://utkarshsinha.com">Utkarsh Sinha</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
-            </span>
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of Washington,</span>
-            <span class="author-block"><sup>2</sup>Google Research</span>
-          </div>
-
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
           <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/pdf/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
+            <h1 class="title is-2 publication-title">CREStE: Scalable Mapless Navigation with Internet Scale Priors and
+              Counterfactual Guidance</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://www.arthurkzhang.com">Arthur Zhang</a><sup></sup>,</span>
+              <span class="author-block">
+                <a href="https://hari-sikchi.github.io">Harshit Sikchi</a><sup></sup>,</span>
+              <span class="author-block">
+                <a href="https://amyzhang.github.io">Amy Zhang</a><sup></sup>,
               </span>
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
+              <span class="author-block">
+                <a href="https://www.joydeepb.com">Joydeep Biswas</a><sup></sup>,
               </span>
-              <!-- Video Link. -->
-              <span class="link-block">
-                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
-                  <span>Video</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/google/nerfies"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
-              </span>
-              <!-- Dataset Link. -->
-              <span class="link-block">
-                <a href="https://github.com/google/nerfies/releases/tag/0.1"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="far fa-images"></i>
-                  </span>
-                  <span>Data</span>
-                  </a>
             </div>
 
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup></sup>University of Texas at Austin</span>
+            </div>
+            <!-- 
+            <div class="column has-text-centered">
+              <img class="responsive-logo" style="width: 35%" src="./static/images/logos.jpg" alt="Lab Logos">
+            </div> -->
+
+            <div class="column has-text-centered">
+              <img class="responsive-logo" style="width: 35%" src="./static/images/logos.jpg" alt="Lab Logos">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2011.12948" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2011.12948" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- TODO: Video Link. -->
+                <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Downtown Deployment</span>
+                  </a>
+                </span>
+                <!-- TODO: Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/google/nerfies" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code (Coming Soon!)</span>
+                  </a>
+                </span>
+                <!-- Dataset Link. -->
+                <!-- <span class="link-block">
+                  <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-images"></i>
+                    </span>
+                    <span>Data</span>
+                  </a>
+              </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- TODO: Implement Mosaic Code Here -->
+  <section class="hero teaser">
+    <!-- Caption for the mosaic -->
+    <div class="container is-max-desktop is-size-5 has-text-justified">
+      <b>
+        CREStE learns representations and rewards for mapless navigation by distilling priors from visual
+        foundation models trained on internet scale data and learning from counterfactual demonstrations.
+      </b>
+    </div>
+    <div class="container is-full-width">
+      <video id="dollyzoom" style="border: 1px solid darkgrey; border-radius: 8px;" autoplay controls muted playsinline
+        height="50%">
+        <source src="./static/videos/publicready_mainmethod.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              <b>CREStE (Counterfactuals for Reward Enhancement with Structured Embeddings)</b> is the first approach to
+              learn representations that address the full mapless navigation
+              problem. CREStE learns generalizable bird's eye view (BEV) scene representations for urban environments by
+              distilling priors from visual foundation models trained on internet-scale data. Using this
+              representation, we predict BEV reward maps for navigation that are aligned with expert and counterfactual
+              demonstrations. CREStE outperforms all state-of-the-art approaches in mapless urban navigation,
+              traversing a <b>2 kilometer mission with just 1 intervention</b>, demonstrating our
+              generalizability
+              to unseen semantic entities and terrains,
+              challenging scenarios with little room for error, and fine-grained human preferences.
+            </p>
+
+            <p>
+              Our approach acheives this without an exhaustive list of semantic classes, large-scale robot
+              datasets, or
+              carefully designed reward functions. We acheive this with the following contributions: 1) A novel model
+              architecture and learning objective that leverages visual foundation models to learn geometrically
+              grounded semantic,
+              geometric, and instance-aware representations 2) A counterfactual-based inverse
+              reinforcement learning
+              objective and framework for learning reward functions that attend to the most important features for
+              navigation.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
-        free-viewpoint
-        portraits.
-      </h2>
-    </div>
-  </div>
-</section>
+  <section class="section">
+    <div class="container is-max-desktop">
 
+      <div class="columns is-centered">
 
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            We present the first method capable of photorealistically reconstructing a non-rigidly
-            deforming scene using photos/videos captured casually from mobile phones.
-          </p>
-          <p>
-            Our approach augments neural radiance fields
-            (NeRF) by optimizing an
-            additional continuous volumetric deformation field that warps each observed point into a
-            canonical 5D NeRF.
-            We observe that these NeRF-like deformation fields are prone to local minima, and
-            propose a coarse-to-fine optimization method for coordinate-based models that allows for
-            more robust optimization.
-            By adapting principles from geometry processing and physical simulation to NeRF-like
-            models, we propose an elastic regularization of the deformation field that further
-            improves robustness.
-          </p>
-          <p>
-            We show that <span class="dnerf">Nerfies</span> can turn casually captured selfie
-            photos/videos into deformable NeRF
-            models that allow for photorealistic renderings of the subject from arbitrary
-            viewpoints, which we dub <i>"nerfies"</i>. We evaluate our method by collecting data
-            using a
-            rig with two mobile phones that take time-synchronized photos, yielding train/validation
-            images of the same pose at different viewpoints. We show that our method faithfully
-            reconstructs non-rigidly deforming scenes and reproduces unseen views with high
-            fidelity.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    <!--/ Paper video. -->
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-      <!-- Visual Effects. -->
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">Visual Effects</h2>
-          <p>
-            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
-            would be impossible without nerfies since it would require going through a wall.
-          </p>
-          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/dollyzoom-stacked.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <!--/ Visual Effects. -->
-
-      <!-- Matting. -->
-      <div class="column">
-        <h2 class="title is-3">Matting</h2>
-        <div class="columns is-centered">
-          <div class="column content">
+        <!-- Visual Effects. -->
+        <div class="column">
+          <div class="content">
+            <h2 class="title is-3">Learning Priors from Visual Foundation Models</h2>
             <p>
-              As a byproduct of our method, we can also solve the matting problem by ignoring
-              samples that fall outside of a bounding box during rendering.
+              CREStE proposes a novel architecture and distillation objective for synergizing semantic and instance
+              priors from Dinov2 and SegmentAnythingv2, resulting in a lightweight perceptual encoder that predicts a
+              generalizable BEV representation from a single RGB-D image.
             </p>
-            <video id="matting-video" controls playsinline height="100%">
-              <source src="./static/videos/matting.mp4"
-                      type="video/mp4">
+            <video id="dollyzoom" autoplay controls muted playsinline height="100%">
+              <source src="./static/videos/perceptualencoder.mp4" type="video/mp4">
             </video>
           </div>
-
         </div>
-      </div>
-    </div>
-    <!--/ Matting. -->
+        <!--/ Visual Effects. -->
 
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Animation</h2>
-
-        <!-- Interpolating. -->
-        <h3 class="title is-4">Interpolating states</h3>
-        <div class="content has-text-justified">
-          <p>
-            We can also animate the scene by interpolating the deformation latent codes of two input
-            frames. Use the slider here to linearly interpolate between the left frame and the right
-            frame.
-          </p>
-        </div>
-        <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
+        <!-- Matting. -->
+        <div class="column">
+          <div class="columns is-centered">
+            <div class="column content">
+              <h2 class="title is-3">Learning Rewards from Counterfactuals</h2>
+              <p>
+                CREStE introduces a principled counterfactual-based inverse reinforcement learning objective and active
+                learning framework that queries humans for counterfactual annotations to align rewards with human
+                preferences.
+              </p>
+              <video id="matting-video" autoplay controls muted playsinline height="100%">
+                <source src="./static/videos/rewardframework.mp4" type="video/mp4">
+              </video>
             </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
-          </div>
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
+
           </div>
         </div>
-        <br/>
-        <!--/ Interpolating. -->
+      </div>
+      <!--/ Matting. -->
 
-        <!-- Re-rendering. -->
-        <h3 class="title is-4">Re-rendering the input video</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
-            viewpoint such as a stabilized camera by playing back the training deformations.
-          </p>
-        </div>
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 width="75%">
-            <source src="./static/videos/replay.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <!--/ Re-rendering. -->
+      <!-- Animation. -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Kilometer Scale Mapless Navigation Deployment</h2>
+          <div class="content has-text-justified">
+            <p>
+              We deploy CREStE on a 2 kilometer unseen urban loop to evaluate it on the task of long-horizon mapless
+              navigation. Trained with only 2.5 hours of real-world demonstrations, CREStE is able to complete the
+              entire mission with just a single intervention, demonstrating its robustness and generalizability to
+              diverse urban environments. We include short clips from this deployment below, including the sole failure,
+              and link the full uncut video externally for viewing.
+            </p>
+            <!-- Container for the interactive map -->
+            <div class="interactive-map-container">
+              <!-- Left column: Static map -->
+              <div class="map-container">
+                <img src="./static/images/map.jpg" alt="Map" class="map-image" />
+                <!-- Markers injected by JS -->
+              </div>
+              <!-- Right column: Video container -->
+              <div class="video-container" id="videoContent">
+                <p>Select a location to expand a video.</p>
+              </div>
+            </div>
 
+            <!-- Preview popup that appears when hovering over markers -->
+            <div id="previewPopup" class="preview-popup">
+              <!-- No <img> tag needed -->
+            </div>
+          </div>
+        </div>
+
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-vcentered">
+        <!-- Left Column: Text -->
+        <div class="column is-centered">
+          <div class="content is-full-width">
+            <h2 class="title is-3">Additional Quantitative Studies</h2>
+            <p>
+              We evaluate CREStE in 5 different urban environments across Austin, Texas with a variety of challenging
+              terrains,
+              dynamic obstacles, and diverse semantic entities. We denote the <text style="color:red"><b>unseen
+                  environments below in red</b></text> and <text style="color:green"><b>seen
+                  environments below in green</b></text>. We compare CREStE against SOTA mapless navigation
+              approaches, and
+              measure the average time to reach subgoal <b>(AST)</b>, percentage of subgoals reached per mission
+              <b>(%S)</b>, and the
+              number of interventions required per 100 meters <b>(NIR)</b>.
+            </p>
+            <img class="image" src="./static/images/shorthorizonexperiments.jpg" alt="Additional Quantitative Studies">
+          </div>
+          <!-- TODO: Add three videos side by side here. Have them equally spaced in width and equal height -->
+          <div class="content is-full-width">
+            Below, we compare CREStE against two SOTA baselines that perform geometric obstacle avoidance and follow
+            terrain-preferences. While these approaches consider important factors for
+            navigation, they are unable to generalize to diverse urban scenes with uneven elevation, unseen semantic
+            classes and terrains,
+            and
+            novel lighting and viewpoint conditions. See our paper for full details on our quantitative experiments.
+          </div>
+          <div class="columns is-full-width">
+            <!-- Video 1 -->
+            <div class="column">
+              <p class="title is-4">CREStE (Ours)</p>
+              <div class="video-wrapper">
+                <video src="./static/videos/paperexperimentsprocessed/hemphillpark_creste.mp4" autoplay controls muted
+                  loop playsinline>
+                </video>
+              </div>
+            </div>
+            <!-- Video 2 -->
+            <div class="column">
+              <h4 class="title is-4">Geometric Only</h4>
+              <div class="video-wrapper">
+                <video src="./static/videos/paperexperimentsprocessed/hemphillpark_geometric.mp4" autoplay controls
+                  muted loop playsinline>
+                </video>
+              </div>
+            </div>
+            <!-- Video 3 -->
+            <div class="column">
+              <h4 class="title is-4">Terrain-Aware + Geometric (PACER+G)
+              </h4>
+              <div class="video-wrapper">
+                <video src="./static/videos/paperexperimentsprocessed/hemphillpark_pacer.mp4" autoplay controls muted
+                  loop playsinline>
+                </video>
+              </div>
+            </div>
+            <!--/ Animation. -->
+          </div>
+        </div>
       </div>
     </div>
-    <!--/ Animation. -->
+    </div>
+  </section>
 
 
-    <!-- Concurrent Work. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
-        <div class="content has-text-justified">
-          <p>
-            There's a lot of excellent work that was introduced around the same time as ours.
-          </p>
-          <p>
-            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
-          </p>
-          <p>
-            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
-            both use deformation fields to model non-rigid scenes.
-          </p>
-          <p>
-            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
-          </p>
-          <p>
-            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
-          </p>
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-vcentered">
+        <!-- Left Column: Text -->
+        <div class="column is-centered">
+          <div class="content is-full-width">
+            <h2 class="title is-3">Acknowledgements</h2>
+            <p>
+              This work has taken place in the Autonomous Mobile Robotics Laboratory (AMRL) and Machine Intelligence and
+              Decision-making through Interaction Laboratory (MIDI) at UT Austin. AMRL research is supported in part by
+              <b>TODO: Fill in</b>. MIDI research is supported in part by <b>TODO: Fill in</b>.
+            </p>
+          </div>
         </div>
       </div>
     </div>
-    <!--/ Concurrent Work. -->
+  </section>
 
-  </div>
-</section>
-
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@article{park2021nerfies,
-  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
-  title     = {Nerfies: Deformable Neural Radiance Fields},
-  journal   = {ICCV},
-  year      = {2021},
-}</code></pre>
-  </div>
-</section>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="./static/videos/nerfies_paper.pdf">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <div class="bibtex-container" style="position: relative;">
+        <pre><code id="bibtexCode">@article{zhang2025creste,
+    author    = {Zhang, Arthur and Sikchi, Harsh and Zhang, Amy and Biswas, Joydeep},
+    title     = {CREStE: Scalable Mapless Navigation with Internet Scale Priors and Counterfactual Guidance},
+    journal   = {arXiv},
+    year      = {2025},
+  }</code></pre>
+        <button id="copyBibtexBtn" class="copy-btn" title="Copy BibTeX">
+          <i class="fas fa-copy"></i>
+        </button>
+      </div>
     </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
-          </p>
+  </section>
+
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="./static/videos/nerfies_paper.pdf">
+          <i class="fas fa-file-pdf"></i>
+        </a>
+        <a class="icon-link" href="https://github.com/artzha" class="external-link" disabled>
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              Website source code from <a href="https://github.com/nerfies/nerfies.github.io">
+                <span class="dnerf">Nerfies</span>
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
 </body>
+
 </html>
