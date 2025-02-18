@@ -1,5 +1,13 @@
 # CREStE
 
+## Local Development
+To view the website locally, run the following command and go to `http://localhost:8000`
+
+```bash
+cd $CRESTE_WEBSITE_DIRECTORY
+./run_local.sh
+```
+
 This is the repository that contains source code for the [CREStE website](https://amrl.cs.utexas.edu/creste).
 
 If you find CREStE useful for your work please cite:
