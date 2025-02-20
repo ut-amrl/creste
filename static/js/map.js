@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoContainer = document.getElementById('videoContent');
     const previewPopup = document.getElementById('previewPopup');
 
-    // We'll store the data for each marker in "data attributes" on the button:
-    // data-origX, data-origY, data-videoUrl, data-description, data-status
+    // We'll store the marker elements in an array for easy reference
+    let markerButtons = [];
 
     function updateMarkerPositions() {
         // Recompute the scale each time, based on the displayed image size
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(text => {
                 const lines = text.split('\n');
-                lines.forEach(line => {
+                lines.forEach((line, index) => {
                     const trimmed = line.trim();
                     if (!trimmed || trimmed.startsWith('#')) return;
 
@@ -60,12 +60,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.dataset.videoUrl = videoURL;
                     btn.dataset.description = shortDescription;
                     btn.dataset.status = successOrFailure;
+                    // Store index in dataset
+                    btn.dataset.markerIndex = index;
+
+                    // Display the index on the circle
+                    btn.style.display = 'flex';
+                    btn.style.alignItems = 'center';
+                    btn.style.justifyContent = 'center';
+                    btn.style.color = '#fff';
+                    btn.style.fontWeight = 'bold';
+                    btn.style.textShadow = '1px 1px 2px rgba(0,0,0,0.8)';
+
+                    btn.textContent = (index + 1).toString(); // Marker number
 
                     // 3) Color the marker by success/failure
                     if (successOrFailure === 'success') {
                         btn.style.background = 'rgba(0, 255, 0, 0.8)'; // green
                     } else if (successOrFailure === 'failure') {
                         btn.style.background = 'rgba(255, 0, 0, 0.8)'; // red
+                    } else {
+                        // default or unknown status
+                        btn.style.background = 'rgba(0,0,255,0.8)';
                     }
 
                     // 4) Hover events → small preview video
@@ -126,44 +141,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // 5) Click → big video in right container
                     btn.addEventListener('click', () => {
-                        videoContainer.innerHTML = '';
-
-                        const expandedContainer = document.createElement('div');
-                        expandedContainer.style.position = 'relative';
-                        expandedContainer.style.width = '100%';
-                        expandedContainer.style.height = 'auto';
-                        videoContainer.appendChild(expandedContainer);
-
-                        const videoEl = document.createElement('video');
-                        videoEl.src = videoURL;
-                        videoEl.controls = true;
-                        videoEl.autoplay = true;
-                        videoEl.playsInline = true;
-                        videoEl.style.width = '100%';
-                        videoEl.style.height = 'auto';
-                        expandedContainer.appendChild(videoEl);
-
-                        // const expandedOverlayText = document.createElement('div');
-                        // expandedOverlayText.innerText = shortDescription;
-                        // expandedOverlayText.style.position = 'absolute';
-                        // expandedOverlayText.style.top = '10px';
-                        // expandedOverlayText.style.left = '10px';
-                        // expandedOverlayText.style.color = '#fff';
-                        // expandedOverlayText.style.fontWeight = 'bold';
-                        // expandedOverlayText.style.textShadow = '1px 1px 3px rgba(0,0,0,0.8)';
-                        // expandedContainer.appendChild(expandedOverlayText);
+                        showVideoInContainer(videoURL, index);
                     });
 
                     // 6) Append marker to map
                     mapContainer.appendChild(btn);
+                    markerButtons.push(btn);
                 });
 
                 // 7) Position all markers once after creation
                 updateMarkerPositions();
+
+                // 8) Randomly preselect one marker’s video
+                if (markerButtons.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * markerButtons.length);
+                    const randomMarker = markerButtons[randomIndex];
+                    const randomVideoUrl = randomMarker.dataset.videoUrl;
+                    showVideoInContainer(randomVideoUrl, randomIndex, true);
+                }
             })
             .catch(err => {
                 console.error('Error loading markers:', err);
             });
+    }
+
+    // Function to show the video in the right container, with overlay text showing the marker index
+    function showVideoInContainer(videoURL, markerIndex, isInitialLoad = false) {
+        videoContainer.innerHTML = '';
+
+        const expandedContainer = document.createElement('div');
+        expandedContainer.style.position = 'relative';
+        expandedContainer.style.width = '100%';
+        expandedContainer.style.height = 'auto';
+        videoContainer.appendChild(expandedContainer);
+
+        const videoEl = document.createElement('video');
+        videoEl.src = videoURL;
+        videoEl.controls = true;
+        videoEl.loop = true;
+        videoEl.autoplay = true;
+        videoEl.playsInline = true;
+        videoEl.style.width = '100%';
+        videoEl.style.height = 'auto';
+        expandedContainer.appendChild(videoEl);
+
+        if (isInitialLoad) {
+            videoEl.muted = true; // Ensure autoplay works
+        }
+        expandedContainer.appendChild(videoEl);
+
+        // Overlay text with the marker number
+        const markerNumberOverlay = document.createElement('div');
+        markerNumberOverlay.innerText = `Location #${markerIndex + 1}`;
+        markerNumberOverlay.style.fontSize = '1.0rem';
+        markerNumberOverlay.style.position = 'absolute';
+        markerNumberOverlay.style.top = '10px';
+        markerNumberOverlay.style.left = '10px';
+        markerNumberOverlay.style.color = '#fff';
+        markerNumberOverlay.style.fontWeight = 'bold';
+        markerNumberOverlay.style.textShadow = '1px 1px 3px rgba(0,0,0,0.8)';
+        expandedContainer.appendChild(markerNumberOverlay);
+
+        setTimeout(() => {
+            videoEl.play().catch(err => console.log("Autoplay prevented: ", err));
+        }, 500);
     }
 
     // Reposition markers on window resize
@@ -175,22 +216,5 @@ document.addEventListener('DOMContentLoaded', () => {
         processMarkers();
     } else {
         mapImage.addEventListener('load', processMarkers);
-    }
-
-    // The function that recalculates & updates marker positions
-    function updateMarkerPositions() {
-        const scaleX = mapImage.clientWidth / mapImage.naturalWidth;
-        const scaleY = mapImage.clientHeight / mapImage.naturalHeight;
-
-        document.querySelectorAll('.map-button').forEach(btn => {
-            const origX = parseFloat(btn.dataset.origX);
-            const origY = parseFloat(btn.dataset.origY);
-
-            const scaledX = origX * scaleX;
-            const scaledY = origY * scaleY;
-
-            btn.style.left = `${scaledX}px`;
-            btn.style.top = `${scaledY}px`;
-        });
     }
 });

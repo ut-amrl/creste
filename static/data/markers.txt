@@ -1,13 +1,13 @@
-960, 340, ./static/videos/fast3x/mueller_east_15s.mp4, Crosswalk Island, success
-969, 496, ./static/videos/fast3x/mueller_east_120s.mp4, Narrow Curb Gap, success
 478, 38, ./static/videos/fast3x/mueller_north_0s.mp4, Avoiding Vehicles, success
 517, 72, ./static/videos/fast3x/mueller_north_45s.mp4, Dodging Pedestrians, success
 685, 225, ./static/videos/fast3x/mueller_north_110s.mp4, Undetected Obstacle, failure
 830, 306, ./static/videos/fast3x/mueller_north_300s.mp4, Narrow Passageway, success
-194, 82, ./static/videos/fast3x/mueller_northwest_540s.mp4, Avoiding Rare Stroller Class, success
-261, 96, ./static/videos/fast3x/mueller_northwest_590s.mp4, Crosswalk Stripes, success
-605, 762, ./static/videos/fast3x/mueller_south_0s.mp4, Narrow S-shaped Path & Curb Gap, success
+960, 340, ./static/videos/fast3x/mueller_east_15s.mp4, Crosswalk Island, success
+969, 496, ./static/videos/fast3x/mueller_east_120s.mp4, Narrow Curb Gap, success
 875, 525, ./static/videos/fast3x/mueller_southeast_70s.mp4, Foliage Covered Sidewalk, success
 708, 546, ./static/videos/fast3x/mueller_southeast_190s.mp4, Foliage Covered Sidewalk, success
+605, 762, ./static/videos/fast3x/mueller_south_0s.mp4, Narrow S-shaped Path & Curb Gap, success
 224, 453, ./static/videos/fast3x/mueller_west_170s.mp4, Unpaved Dirt Trail, success
 139, 296, ./static/videos/fast3x/mueller_west_280s.mp4, Crosswalk & Tight Corner, success
+194, 82, ./static/videos/fast3x/mueller_northwest_540s.mp4, Avoiding Rare Stroller Class, success
+261, 96, ./static/videos/fast3x/mueller_northwest_590s.mp4, Crosswalk Stripes, success
